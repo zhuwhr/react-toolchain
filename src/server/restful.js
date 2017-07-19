@@ -1,5 +1,6 @@
-import { router } from 'express';
-const routers = router();
+import Router from 'express';
+import User from '../data/models'
+const router = new Router();
 
 router.route('/users/:id')
   .get()
@@ -7,7 +8,14 @@ router.route('/users/:id')
   .delete();
 
 router.route('/users')
-  .get()
+  .get((req, res) => {
+    User.findAll().then((err, users) => {
+      if (err) {
+        res.send(err);
+      }
+      res.json(users)
+    })
+  })
   .post();
 
-export default routers;
+export default router;

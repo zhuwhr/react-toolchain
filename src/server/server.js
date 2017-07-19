@@ -5,6 +5,7 @@ import PrettyError from 'pretty-error';
 import models from '../data/models';
 import graphqlHTTP from 'express-graphql';
 import { schema, rootValue } from '../data/graphql';
+import router from './restful'
 
 const isProduction = process.env.NODE_ENV === 'production';
 const app = express();
@@ -48,6 +49,8 @@ app.use('/graphql', graphqlHTTP({
   rootValue,
   graphiql: true,
 }))
+
+app.use('/restapi', router)
 
 let port = process.env.PORT || 8888;
 app.listen(port, () => {
